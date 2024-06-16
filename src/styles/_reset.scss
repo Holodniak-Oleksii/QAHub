@@ -1,0 +1,138 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  @media screen and (max-width: 1024px) {
+    user-select: none;
+  }
+}
+
+html,
+body,
+#__next {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: #ffffff;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+*::-webkit-media-controls-panel {
+  display: none !important;
+  -webkit-appearance: none;
+}
+*::-webkit-scrollbar {
+  width: 0px;
+}
+*::-webkit-media-controls-play-button {
+  display: none !important;
+  -webkit-appearance: none;
+}
+
+*::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+}
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]:hover,
+input[type="number"]:focus {
+  -moz-appearance: number-input;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  margin: 0;
+  user-select: none;
+}
+
+button:focus {
+  outline: none;
+}
+a {
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  font-weight: 400;
+}
+
+span,
+b,
+div {
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  font-weight: normal;
+}
+p {
+  margin: 0;
+}
+
+img {
+  pointer-events: none;
+  outline: none;
+  border: none;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 0;
+  margin: 0;
+}
+
+.ReactModal__Overlay {
+  background-color: rgba(52, 64, 84, 0.7) !important;
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.ReactModal__Content {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+  position: static !important;
+  background: none !important;
+  border: none !important;
+  overflow: visible !important;
+  margin: auto;
+  max-width: 100vw;
+}
+
+.notistack-SnackbarContainer {
+  z-index: 100000 !important;
+}
