@@ -24,4 +24,6 @@ export interface IProject {
   name: string;
   members: IUser[];
   tasks: ITask[];
+  joinCode: string;
+  ownerId: TID;
 }

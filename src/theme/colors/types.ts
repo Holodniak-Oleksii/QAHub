@@ -53,16 +53,16 @@ export interface IPallette {
   success800: string;
   success900: string;
 
-  // warning
-  warning25: string;
-  warning50: string;
-  warning100: string;
-  warning200: string;
-  warning300: string;
-  warning400: string;
-  warning500: string;
-  warning600: string;
-  warning700: string;
-  warning800: string;
-  warning900: string;
+  // text
+  text25: string;
+  text50: string;
+  text100: string;
+  text200: string;
+  text300: string;
+  text400: string;
+  text500: string;
+  text600: string;
+  text700: string;
+  text800: string;
+  text900: string;
 }

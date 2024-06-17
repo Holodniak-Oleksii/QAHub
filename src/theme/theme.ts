@@ -66,10 +66,7 @@ export const theme: ITheme = {
     mainContainerPadding: `
       padding: 0 120px 0 120px;
       @media screen and (max-width: 1920px) {
-        padding: 0 6.3vw;
-      }
-      @media screen and (max-width: 1440px) {
-        padding: 0 7vw;
+        padding: 0 4vw;
       }
       @media screen and (max-width: 1280px) {
         padding: 0 40px;
@@ -79,13 +76,7 @@ export const theme: ITheme = {
       }
     `,
     headerSpace: `
-      padding-top: 104px;
-      @media screen and (max-width: 1280px) {
         padding-top: 80px; 
-      }
-      @media screen and (max-width: 540px) {
-        padding-top: 72px; 
-      }
     `,
     mainContainerWidth: `
       width: 100%;
