@@ -1,3 +1,5 @@
+import { STATUS } from "../enums";
+
 export type TID = number | string;
 export type TPriority = "low" | "middle" | "high" | "highest";
 
@@ -12,11 +14,12 @@ export interface ITask {
   id: TID;
   title: string;
   description: string;
-  status: string;
+  status: STATUS;
   projectId: TID;
   createdAt: Date;
   priority: TPriority;
   estimated: number;
+  performer: IUser;
 }
 
 export interface IProject {

@@ -1,8 +1,8 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
+import { queryClient } from "./api";
 import AppRouter from "./router";
 import Theme from "./theme";
-import { queryClient } from "./api";
 
 const App = () => {
   return (
