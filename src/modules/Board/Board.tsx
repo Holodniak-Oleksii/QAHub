@@ -1,5 +1,5 @@
 import { LINK_TEMPLATES } from "@/common/constants";
-import { STATUS } from "@/common/enums";
+import { EStatus } from "@/common/enums";
 import { ITask } from "@/common/types";
 import { mockProjects } from "@/mocks";
 import { useState } from "react";
@@ -14,7 +14,7 @@ const Board = () => {
   const [tasks, setTasks] = useState(project.tasks);
 
   const renderColumns = () => {
-    return Object.keys(STATUS).map((value) => {
+    return Object.keys(EStatus).map((value) => {
       const items = tasks.filter((item) => item.status === value);
       return <Column id={value} title={value} tasks={items} key={value} />;
     });

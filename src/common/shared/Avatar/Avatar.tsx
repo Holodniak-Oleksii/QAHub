@@ -1,5 +1,7 @@
 import { Wrapper } from "./styles";
 
-const Avatar = ({ name = "" }) => <Wrapper>{name.slice(0, 2)}</Wrapper>;
+const Avatar = ({ name = "" }) => (
+  <Wrapper className="avatar">{name.slice(0, 2)}</Wrapper>
+);
 
 export default Avatar;

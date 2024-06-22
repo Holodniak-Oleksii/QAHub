@@ -1,4 +1,4 @@
-import { STATUS } from "../enums";
+import { EStatus } from "../enums";
 
 export type TID = number | string;
 export type TPriority = "low" | "middle" | "high" | "highest";
@@ -14,7 +14,7 @@ export interface ITask {
   id: TID;
   title: string;
   description: string;
-  status: STATUS;
+  status: EStatus;
   projectId: TID;
   createdAt: Date;
   priority: TPriority;
@@ -27,6 +27,5 @@ export interface IProject {
   name: string;
   members: IUser[];
   tasks: ITask[];
-  joinCode: string;
   ownerId: TID;
 }

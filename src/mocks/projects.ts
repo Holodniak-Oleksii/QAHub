@@ -1,4 +1,4 @@
-import { STATUS } from "@/common/enums";
+import { EStatus } from "@/common/enums";
 import { IProject, ITask, IUser } from "@/common/types";
 
 export const mockUsers: IUser[] = [
@@ -8,17 +8,31 @@ export const mockUsers: IUser[] = [
     projects: ["1"],
     username: "Elon Mask",
   },
+  {
+    id: "2",
+    positions: "QA Engineer",
+    projects: ["2"],
+    username: "Elon Tasl",
+  },
+  {
+    id: "3",
+    positions: "QA Engineer",
+    projects: ["3"],
+    username: "Elon Ostrovskui",
+  },
 ];
 
 export const mockTasks: ITask[] = [
   {
     id: "1",
-    description: "Task 1",
+    description: `
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    `,
     title: "Task 1",
     estimated: 2,
     priority: "middle",
     projectId: "1",
-    status: STATUS.DONE,
+    status: EStatus.DONE,
     createdAt: new Date(),
     performer: mockUsers[0],
   },
@@ -29,7 +43,7 @@ export const mockTasks: ITask[] = [
     estimated: 2,
     priority: "highest",
     projectId: "1",
-    status: STATUS.IN_PROGRESS,
+    status: EStatus["IN PROGRESS"],
     createdAt: new Date(),
     performer: mockUsers[0],
   },
@@ -40,7 +54,7 @@ export const mockTasks: ITask[] = [
     estimated: 4,
     priority: "low",
     projectId: "1",
-    status: STATUS.IN_PROGRESS,
+    status: EStatus["IN PROGRESS"],
     createdAt: new Date(),
     performer: mockUsers[0],
   },

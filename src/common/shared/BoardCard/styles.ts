@@ -1,3 +1,4 @@
+import { EStatus } from "@/common/enums";
 import { TPriority } from "@/common/types";
 import { theme } from "@/theme/theme";
 import styled from "styled-components";
@@ -10,6 +11,14 @@ export const priorityColor: Record<TPriority, string> = {
   low: theme.colors.gray400,
 };
 
+const statusColor: Record<EStatus, string> = {
+  [EStatus.DONE]: theme.colors.success900,
+  [EStatus.BACKLOG]: theme.colors.main500,
+  [EStatus.BLOCKED]: theme.colors.main500,
+  [EStatus["IN PROGRESS"]]: theme.colors.main500,
+  [EStatus.TODO]: theme.colors.main500,
+};
+
 export const Wrapper = styled.div<IWrapperProps>`
   width: 100%;
   height: fit-content;
@@ -17,8 +26,10 @@ export const Wrapper = styled.div<IWrapperProps>`
   padding: 16px;
   ${({ theme }) => theme.flex.column};
   gap: 16px;
-  background-color: ${({ isDragging, theme }) =>
-    isDragging ? theme.colors.main400 : theme.colors.main500};
+  transition: all 0.3s ease;
+  background-color: ${({ isDragging, theme, status }) =>
+    isDragging ? theme.colors.main400 : statusColor[status]};
+  opacity: ${({ status }) => (status === EStatus.BACKLOG ? 0.5 : 1)};
 `;
 
 export const Title = styled.div`

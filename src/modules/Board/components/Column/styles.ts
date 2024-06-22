@@ -3,14 +3,14 @@ import { IListProps } from "./types";
 
 export const Wrapper = styled.div`
   width: 300px;
-  min-height: 100%;
+  min-height: calc(100% - 24px);
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.main600};
 `;
 
 export const Title = styled.div`
   ${({ theme }) => theme.flex.center};
-  height: 40px;
+  height: 60px;
   color: ${({ theme }) => theme.colors.main0};
 `;
 

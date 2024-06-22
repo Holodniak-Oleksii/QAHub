@@ -1,3 +1,6 @@
+import { FieldError, Merge } from "react-hook-form";
+import { EModal } from "../enums";
+
 export interface IOption {
   label: string;
   value: string;
@@ -18,4 +21,15 @@ export interface IInvalid {
 
 export interface IDisabled {
   disabled: boolean;
+}
+
+export interface IModalProps {
+  id: EModal;
+}
+
+export type TErrorForm =
+  | FieldError
+  | Merge<FieldError, (FieldError | undefined)[]>;
+export interface IError {
+  error?: TErrorForm;
 }

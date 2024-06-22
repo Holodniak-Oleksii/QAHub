@@ -1,6 +1,7 @@
-export enum STATUS {
+export enum EStatus {
   TODO = "TODO",
-  IN_PROGRESS = "IN_PROGRESS",
+  "IN PROGRESS" = "IN PROGRESS",
   BLOCKED = "BLOCKED",
   DONE = "DONE",
+  BACKLOG = "BACKLOG",
 }

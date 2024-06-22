@@ -10,21 +10,26 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ebay/nice-modal-react": "^1.2.13",
     "@tanstack/react-query": "^5.45.1",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.52.0",
+    "react-modal": "^3.16.1",
     "react-responsive": "^10.0.0",
     "react-router-dom": "^6.23.1",
     "scss": "^0.2.4",
     "styled-components": "^6.1.11"
   },
   "devDependencies": {
+    "@types/": "ebay/nice-modal-react",
     "@types/node": "^20.14.2",
     "@types/react": "^18.2.66",
     "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.2.22",
+    "@types/react-modal": "^3.16.3",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",
