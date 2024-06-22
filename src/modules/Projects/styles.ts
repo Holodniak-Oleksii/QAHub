@@ -65,3 +65,18 @@ export const IconButton = styled.div`
   ${({ theme }) => theme.flex.center};
   border: 1px solid ${({ theme }) => theme.colors.main400};
 `;
+
+export const Message = styled.div`
+  width: 100%;
+  height: 400px;
+  margin: auto;
+  ${({ theme }) => theme.flex.center};
+  color: ${({ theme }) => theme.colors.main0};
+  font-size: 24px;
+  line-height: 1.5;
+  font-weight: 600;
+  background-color: ${({ theme }) => theme.colors.main600};
+  box-shadow: ${({ theme }) => theme.boxShadow.xs};
+  border-radius: 4px;
+  margin-top: 12px;
+`;

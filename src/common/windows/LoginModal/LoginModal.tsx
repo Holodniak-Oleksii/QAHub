@@ -1,9 +1,13 @@
+import { getUserById } from "@/api";
 import { EModal } from "@/common/enums";
+import { useUserStore } from "@/common/store/user";
 import { IModalProps } from "@/common/types";
+import { auth } from "@/firebase";
 import { ModalLayout } from "@/layouts";
 import { Button } from "@/ui-liberty/buttons";
 import { Input } from "@/ui-liberty/inputs";
 import { create, useModal } from "@ebay/nice-modal-react";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { ActionContainer, Form, Title } from "../styles";
@@ -17,18 +21,27 @@ const LoginModal = create<IModalProps>(({ id }) => {
     formState: { errors },
   } = useForm<ILoginFormFields>({ mode: "onSubmit" });
 
+  const updateUser = useUserStore((state) => state.updateUser);
   const { enqueueSnackbar } = useSnackbar();
   const { show: showRegistrationModal } = useModal(EModal.REGISTRATION_MODAL);
 
   const onSubmit = async (data: ILoginFormFields) => {
-    console.log("data :", data);
     try {
-      // const response = await mutateAsync(data);
+      const { user } = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+
+      const profile = await getUserById(user.uid);
+
+      updateUser(profile);
 
       enqueueSnackbar("Success", {
         variant: "success",
       });
-      // push(LINK_TEMPLATES.PROFILE(user.username));
+
+      hide();
     } catch (e) {
       enqueueSnackbar("Something went wrong", {
         variant: "warning",
@@ -41,12 +54,12 @@ const LoginModal = create<IModalProps>(({ id }) => {
       <Title>Sing in</Title>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
-          label={"Username"}
-          placeholder={"Enter username"}
-          {...register("username", {
+          label={"Email"}
+          placeholder={"Enter email"}
+          {...register("email", {
             required: true,
           })}
-          error={errors.username}
+          error={errors.email}
         />
 
         <Input

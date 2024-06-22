@@ -1,9 +1,13 @@
 import { EModal } from "@/common/enums";
+import { useUserStore } from "@/common/store/user";
 import { IModalProps } from "@/common/types";
+import { auth, firestore } from "@/firebase";
 import { ModalLayout } from "@/layouts";
 import { Button } from "@/ui-liberty/buttons";
 import { Input } from "@/ui-liberty/inputs";
 import { create, useModal } from "@ebay/nice-modal-react";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { ActionContainer, Form, Title } from "../styles";
@@ -18,16 +22,33 @@ const RegistrationModal = create<IModalProps>(({ id }) => {
   } = useForm<IRegistrationFormFields>({ mode: "onSubmit" });
   const { show: showLoginModal } = useModal(EModal.LOGIN_MODAL);
   const { enqueueSnackbar } = useSnackbar();
+  const updateUser = useUserStore((state) => state.updateUser);
 
   const onSubmit = async (data: IRegistrationFormFields) => {
-    console.log("data :", data);
     try {
-      // const response = await mutateAsync(data);
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      await updateProfile(user, { displayName: data.username });
+
+      const usersCollectionRef = collection(firestore, "users");
+
+      const profile = {
+        id: user.uid,
+        username: data.username,
+        positions: data.position,
+        projects: [],
+      };
+      await addDoc(usersCollectionRef, profile);
+
+      updateUser(profile);
 
       enqueueSnackbar("Success", {
         variant: "success",
       });
-      // push(LINK_TEMPLATES.PROFILE(user.username));
+      hide();
     } catch (e) {
       enqueueSnackbar("Something went wrong", {
         variant: "warning",
@@ -46,6 +67,24 @@ const RegistrationModal = create<IModalProps>(({ id }) => {
             required: true,
           })}
           error={errors.username}
+        />
+
+        <Input
+          label={"Email"}
+          placeholder={"Enter email"}
+          {...register("email", {
+            required: true,
+          })}
+          error={errors.email}
+        />
+
+        <Input
+          label={"Position"}
+          placeholder={"Enter position"}
+          {...register("position", {
+            required: true,
+          })}
+          error={errors.position}
         />
 
         <Input

@@ -1,20 +1,32 @@
+import { LINK_TEMPLATES } from "@/common/constants";
 import { EModal } from "@/common/enums";
-import { PlusIcon, UserPlusIcon } from "@/common/icons";
+import { LogoutIcon, PlusIcon, UserPlusIcon } from "@/common/icons";
 import { Avatar } from "@/common/shared";
-import { mockUsers } from "@/mocks";
+import { useUserStore } from "@/common/store/user";
+import { auth } from "@/firebase";
 import { Button } from "@/ui-liberty/buttons";
 import { useModal } from "@ebay/nice-modal-react";
-import { useLocation } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Icon } from "./styles";
 
 const Account = () => {
-  const user = mockUsers[0];
-  const isAuth = true;
+  const user = useUserStore((state) => state.user);
+  const updateUser = useUserStore((state) => state.updateUser);
+  const isAuth = useUserStore((state) => state.isAuth);
+
+  const push = useNavigate();
   const { pathname } = useLocation();
   const { show: showCreateTaskModal } = useModal(EModal.CREATE_TASK_MODAL);
   const { show: showLoginModal } = useModal(EModal.LOGIN_MODAL);
   const { show: showRegistrationModal } = useModal(EModal.REGISTRATION_MODAL);
   const { show: showAddMembersModal } = useModal(EModal.ADD_MEMBERS_MODAL);
+
+  const handlerLogout = () => {
+    signOut(auth);
+    updateUser(null);
+    push(LINK_TEMPLATES.PROJECTS());
+  };
 
   return (
     <Container>
@@ -30,7 +42,10 @@ const Account = () => {
               </Icon>
             </>
           )}
-          <Avatar name={user.username} />
+          <Avatar name={user?.username} />
+          <Icon onClick={handlerLogout}>
+            <LogoutIcon />
+          </Icon>
         </>
       ) : (
         <>
