@@ -116,6 +116,10 @@ const Select: FC<ISelectProps> = (props) => {
     }
   }, [initialValue, select]);
 
+  useEffect(() => {
+    setFilteredOptions(options);
+  }, [JSON.stringify(options)]);
+
   return (
     <Wrapper ref={refWrapper} className="form_item">
       {label && <Label>{label}</Label>}

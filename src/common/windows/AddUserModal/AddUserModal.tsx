@@ -1,12 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useGetProjectQuery } from "@/api";
 import { MemberSelect } from "@/common/shared";
 import { useMembersStore } from "@/common/store/members";
 import { IUser } from "@/common/types";
+import { firestore } from "@/firebase";
 import { ModalLayout } from "@/layouts";
 import { Button } from "@/ui-liberty/buttons";
 import { create, useModal } from "@ebay/nice-modal-react";
+import { doc, updateDoc } from "firebase/firestore";
 import { useSnackbar } from "notistack";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ICreateTaskProps } from "../CreateTaskModal/types";
 import { ActionContainer, Title } from "../styles";
 import { Container } from "./styles";
@@ -19,9 +22,21 @@ const AddUserModal = create<ICreateTaskProps>(({ id, uid }) => {
   const userList = useMembersStore((state) => state.members);
   const { data: project, refetch } = useGetProjectQuery(uid || 0);
 
+  const list = useMemo(
+    () =>
+      userList.filter(
+        (user) => !project?.members.find((member) => member.id === user.id)
+      ),
+    [userList?.length, project?.members?.length]
+  );
+
   const handlerAdd = async () => {
     try {
-      // const response = await mutateAsync(data);
+      const projectCollectionRef = doc(firestore, "projects", uid || "0");
+
+      await updateDoc(projectCollectionRef, {
+        members: [...(project?.members || []), ...members],
+      });
 
       enqueueSnackbar("Success", {
         variant: "success",
@@ -35,11 +50,6 @@ const AddUserModal = create<ICreateTaskProps>(({ id, uid }) => {
     }
   };
 
-  console.log(
-    userList.filter(
-      (user) => !project?.members.find((member) => member.id === user.id)
-    )
-  );
   return (
     <ModalLayout isOpen={visible} onRequestClose={hide} maxWidth={600}>
       <Container>
@@ -47,12 +57,10 @@ const AddUserModal = create<ICreateTaskProps>(({ id, uid }) => {
         <MemberSelect
           members={members}
           onChangeMembers={(value) => setMembers(value)}
-          usersList={userList.filter(
-            (user) => !project?.members.find((member) => member.id === user.id)
-          )}
+          usersList={list}
         />
         <ActionContainer>
-          <Button variant="text" onClick={handlerAdd}>
+          <Button variant="text" onClick={handlerAdd} disabled={!list.length}>
             Confirm
           </Button>
         </ActionContainer>

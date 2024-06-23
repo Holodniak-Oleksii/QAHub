@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useGetProjectQuery } from "@/api";
 import { EPriority, EStatus } from "@/common/enums";
-import { useMembersStore } from "@/common/store/members";
 import { IOption } from "@/common/types/general";
 import { firestore } from "@/firebase";
 import { ModalLayout } from "@/layouts";
@@ -9,7 +9,7 @@ import { Input, Select, TextArea } from "@/ui-liberty/inputs";
 import { create, useModal } from "@ebay/nice-modal-react";
 import { doc, updateDoc } from "firebase/firestore";
 import { useSnackbar } from "notistack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ActionContainer, Form } from "./styles";
 import { ICreateTaskFormFields, ICreateTaskProps } from "./types";
@@ -23,7 +23,6 @@ const CreateTaskModal = create<ICreateTaskProps>(({ id, uid }) => {
   } = useForm<ICreateTaskFormFields>({ mode: "onSubmit" });
 
   const { data: project, refetch } = useGetProjectQuery(uid || 0);
-  const members = useMembersStore((state) => state.members);
 
   const [statusesOptions] = useState<IOption[]>(
     Object.keys(EStatus).map((value, id) => ({ id, value, label: value }))
@@ -31,22 +30,21 @@ const CreateTaskModal = create<ICreateTaskProps>(({ id, uid }) => {
   const [priorityOptions] = useState<IOption[]>(
     Object.keys(EPriority).map((value, id) => ({ id, value, label: value }))
   );
+  console.log("project?.members :", project?.members);
 
-  const [performerOptions] = useState<IOption[]>(
-    members.map((value, id) => ({
+  const [performerOptions, setPerformerOptions] = useState<IOption[]>(
+    project?.members?.map((value, id) => ({
       id,
       value: value.username,
       label: value.username,
-    }))
+    })) || []
   );
 
   const { enqueueSnackbar } = useSnackbar();
 
   const onSubmit = async (data: ICreateTaskFormFields) => {
-    console.log("data :", data);
-
     try {
-      const chooseUser = members.find(
+      const chooseUser = project?.members?.find(
         (user) => user.username === data.performerUsername
       );
 
@@ -81,6 +79,16 @@ const CreateTaskModal = create<ICreateTaskProps>(({ id, uid }) => {
       });
     }
   };
+
+  useEffect(() => {
+    setPerformerOptions(
+      project?.members?.map((value, id) => ({
+        id,
+        value: value.username,
+        label: value.username,
+      })) || []
+    );
+  }, [project?.members?.length]);
 
   return (
     <ModalLayout isOpen={visible} onRequestClose={hide} maxWidth={600}>

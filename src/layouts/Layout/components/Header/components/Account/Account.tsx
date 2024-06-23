@@ -42,7 +42,7 @@ const Account = () => {
                 <PlusIcon />
               </Icon>
               {project?.ownerId === user?.id && (
-                <Icon onClick={() => showAddMembersModal()}>
+                <Icon onClick={() => showAddMembersModal({ uid: id })}>
                   <UserPlusIcon />
                 </Icon>
               )}
