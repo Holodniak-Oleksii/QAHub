@@ -1054,6 +1054,11 @@
   dependencies:
     "@babel/types" "^7.20.7"
 
+"@types/config@^3.3.4":
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/@types/config/-/config-3.3.4.tgz#e46d1ee74f9b0c53645f644dd5f3ba5bedc68d76"
+  integrity sha512-qFiTLnWy+TdPSMIXFHP+87lFXFRM4SXjRS+CSB66+56TrpLNw003y1sh7DGaaC1NGesxgKoT5FDy6dyA1Xju/g==
+
 "@types/estree@1.0.5":
   version "1.0.5"
   resolved "https://registry.npmjs.org/@types/estree/-/estree-1.0.5.tgz"

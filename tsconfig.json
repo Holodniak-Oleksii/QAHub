@@ -26,10 +26,23 @@
       "@/*": [
         "src/*"
       ]
-    }
+    },
+    "typeRoots": [
+      "node_modules/@types",
+      "./types"
+    ],
+    "types": [
+      "node",
+      "react",
+      "react-dom",
+      "config"
+    ]
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "node_modules"
   ],
   "references": [
     {
