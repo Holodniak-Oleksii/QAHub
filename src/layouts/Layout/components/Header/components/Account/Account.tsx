@@ -7,7 +7,7 @@ import { auth } from "@/firebase";
 import { Button } from "@/ui-liberty/buttons";
 import { useModal } from "@ebay/nice-modal-react";
 import { signOut } from "firebase/auth";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Container, Icon } from "./styles";
 
 const Account = () => {
@@ -16,6 +16,7 @@ const Account = () => {
   const isAuth = useUserStore((state) => state.isAuth);
 
   const push = useNavigate();
+  const { id } = useParams();
   const { pathname } = useLocation();
   const { show: showCreateTaskModal } = useModal(EModal.CREATE_TASK_MODAL);
   const { show: showLoginModal } = useModal(EModal.LOGIN_MODAL);
@@ -34,7 +35,7 @@ const Account = () => {
         <>
           {pathname.includes("board") && (
             <>
-              <Icon onClick={() => showCreateTaskModal()}>
+              <Icon onClick={() => showCreateTaskModal({ uid: id })}>
                 <PlusIcon />
               </Icon>
               <Icon onClick={() => showAddMembersModal()}>

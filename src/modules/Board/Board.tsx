@@ -1,22 +1,33 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useGetProjectQuery } from "@/api";
 import { LINK_TEMPLATES } from "@/common/constants";
 import { EStatus } from "@/common/enums";
 import { ITask } from "@/common/types";
-import { mockProjects } from "@/mocks";
-import { useState } from "react";
+import { firestore } from "@/firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { DragDropContext, OnDragEndResponder } from "react-beautiful-dnd";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Column } from "./components";
 import { Container, Head, List, Separate, Title, Wrapper } from "./styles";
 
 const Board = () => {
-  const project = mockProjects[0];
-
-  const [tasks, setTasks] = useState(project.tasks);
+  const { id } = useParams();
+  const { data: project } = useGetProjectQuery(id || 0);
+  const [tasks, setTasks] = useState(project?.tasks || []);
 
   const renderColumns = () => {
     return Object.keys(EStatus).map((value) => {
       const items = tasks.filter((item) => item.status === value);
       return <Column id={value} title={value} tasks={items} key={value} />;
+    });
+  };
+
+  const handlerUpdateDoc = async (tasks: ITask[]) => {
+    const projectCollectionRef = doc(firestore, "projects", id || "0");
+
+    await updateDoc(projectCollectionRef, {
+      tasks,
     });
   };
 
@@ -62,15 +73,19 @@ const Board = () => {
       (task) => task.status !== destination.droppableId
     );
     const finalTasks = [...otherTasks, ...destinationTasks];
-
+    handlerUpdateDoc(finalTasks);
     setTasks(finalTasks);
   };
+
+  useEffect(() => {
+    setTasks(project?.tasks || []);
+  }, [project?.tasks?.length]);
 
   return (
     <Wrapper>
       <Head>
         <Title>
-          <Link to={LINK_TEMPLATES.PROJECTS()}>Projects</Link> / {project.name}
+          <Link to={LINK_TEMPLATES.PROJECTS()}>Projects</Link> / {project?.name}
         </Title>
         <Separate />
       </Head>

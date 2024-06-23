@@ -1,6 +1,7 @@
-import { IUser } from "@/common/types";
+import { EQueryKey } from "@/common/enums";
+import { IProject, IUser, TID } from "@/common/types";
 import { firestore } from "@/firebase";
-import { QueryClient } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
 export const queryClient = new QueryClient({
@@ -21,4 +22,36 @@ export const getUserById = async (id: string): Promise<IUser> => {
 
   const { docs } = await getDocs(userCollectionRef);
   return docs[0].data() as IUser;
+};
+
+export const useGetProjectsQuery = (uid: TID) => {
+  return useQuery<IProject[]>({
+    refetchOnMount: false,
+    queryKey: [EQueryKey.PROJECT, uid],
+    queryFn: async () => {
+      const projectsCollectionRef = query(
+        collection(firestore, "projects"),
+        where("ownerId", "==", uid)
+      );
+
+      const { docs } = await getDocs(projectsCollectionRef);
+      return docs.map((doc) => doc.data()) as IProject[];
+    },
+  });
+};
+
+export const useGetProjectQuery = (uid: TID) => {
+  return useQuery<IProject>({
+    refetchOnMount: false,
+    queryKey: [EQueryKey.PROJECT_SINGLE, uid],
+    queryFn: async () => {
+      const projectCollectionRef = query(
+        collection(firestore, "projects"),
+        where("id", "==", uid)
+      );
+
+      const { docs } = await getDocs(projectCollectionRef);
+      return docs[0].data() as IProject;
+    },
+  });
 };

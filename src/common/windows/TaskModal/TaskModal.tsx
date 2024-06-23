@@ -44,7 +44,7 @@ const TaskModal = create<ITaskModalProps>(({ id, task }) => {
             </Cell>
             <Property>Created at</Property>
             <Cell>
-              <Property>{task.createdAt.toDateString()}</Property>
+              <Property>{task.createdAt}</Property>
             </Cell>
           </Grid>
         </Bar>

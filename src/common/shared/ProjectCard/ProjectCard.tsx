@@ -1,8 +1,8 @@
+import { LINK_TEMPLATES } from "@/common/constants";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { Avatar, Footer, Head, Row, Title, Wrapper } from "./styles";
 import { IProjectCardProps } from "./types";
-import { LINK_TEMPLATES } from "@/common/constants";
 
 const ProjectCard: FC<IProjectCardProps> = ({ project }) => {
   const push = useNavigate();

@@ -15,8 +15,7 @@ export interface ITask {
   title: string;
   description: string;
   status: EStatus;
-  projectId: TID;
-  createdAt: Date;
+  createdAt: string;
   priority: TPriority;
   estimated: number;
   performer: IUser;

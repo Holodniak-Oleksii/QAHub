@@ -1,4 +1,4 @@
-import { ITask } from "@/common/types";
+import { IModalProps, ITask } from "@/common/types";
 
 export interface ICreateTaskFormFields
   extends Pick<
@@ -6,4 +6,8 @@ export interface ICreateTaskFormFields
     "description" | "estimated" | "priority" | "status" | "title"
   > {
   performerUsername: string;
+}
+
+export interface ICreateTaskProps extends IModalProps {
+  uid: string;
 }

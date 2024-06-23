@@ -1,8 +1,8 @@
+import { useGetProjectsQuery } from "@/api";
 import { EModal } from "@/common/enums";
 import { PlusIcon } from "@/common/icons";
 import { ProjectCard } from "@/common/shared";
 import { useUserStore } from "@/common/store/user";
-import { mockProjects } from "@/mocks";
 import { useModal } from "@ebay/nice-modal-react";
 import {
   Content,
@@ -17,12 +17,15 @@ import {
 
 const Projects = () => {
   const isAuth = useUserStore((state) => state.isAuth);
+  const user = useUserStore((state) => state.user);
+
   const { show: showCreateProjectModal } = useModal(
     EModal.CREATE_PROJECT_MODAL
   );
+  const { data: projects } = useGetProjectsQuery(user?.id || 0);
 
   const renderProjects = () =>
-    mockProjects.map((project) => (
+    projects?.map((project) => (
       <ProjectCard key={project.id} project={project} />
     ));
 

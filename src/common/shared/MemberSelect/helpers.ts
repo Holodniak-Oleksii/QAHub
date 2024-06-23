@@ -8,5 +8,7 @@ export const filterObjects = (
 ): IUser[] => {
   const keysToRemove = new Set(array2.map((obj) => obj[key]));
   const excludedArray = array1.filter((obj) => !keysToRemove.has(obj[key]));
-  return excludedArray.filter((item) => item.username.includes(search));
+  return excludedArray.filter((item) =>
+    item.username.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+  );
 };
