@@ -13,7 +13,7 @@ import { Container, Head, List, Separate, Title, Wrapper } from "./styles";
 
 const Board = () => {
   const { id } = useParams();
-  const { data: project } = useGetProjectQuery(id || 0);
+  const { data: project, refetch } = useGetProjectQuery(id || 0);
   const [tasks, setTasks] = useState(project?.tasks || []);
 
   const renderColumns = () => {
@@ -75,6 +75,7 @@ const Board = () => {
     const finalTasks = [...otherTasks, ...destinationTasks];
     handlerUpdateDoc(finalTasks);
     setTasks(finalTasks);
+    refetch();
   };
 
   useEffect(() => {
