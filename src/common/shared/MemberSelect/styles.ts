@@ -1,9 +1,15 @@
 import { IOpenable } from "@/common/types";
 import styled, { css } from "styled-components";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ disabled: boolean }>`
   width: 100%;
   position: relative;
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      pointer-events: none;
+      opacity: 0.4;
+    `}
 `;
 
 export const InputContainer = styled.div`

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useOnClickOutside } from "@/common/hooks";
 import { IUser, TID } from "@/common/types";
 import { FC, useEffect, useMemo, useRef, useState } from "react";
@@ -28,8 +29,8 @@ const MemberSelect: FC<IMembersSelectProps> = ({
   useOnClickOutside(refWrapper, () => setIsOpen(false));
 
   useEffect(() => {
-    onChangeMembers(members);
-  }, [members, onChangeMembers]);
+    onChangeMembers(users);
+  }, [users.length, onChangeMembers]);
 
   const handlerAddMember = (user: IUser) => {
     return () => setUsers((prev) => [...prev, user]);
@@ -58,7 +59,7 @@ const MemberSelect: FC<IMembersSelectProps> = ({
     ));
 
   return (
-    <Wrapper ref={refWrapper}>
+    <Wrapper ref={refWrapper} disabled={!usersList?.length}>
       <Label>Choose members</Label>
 
       <InputContainer onClick={() => setIsOpen(true)}>

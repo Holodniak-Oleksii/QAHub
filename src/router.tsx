@@ -26,7 +26,7 @@ const AppRouter: React.FC = () => {
 
         const { docs } = await getDocs(membersCollectionRef);
         const members = docs.map((doc) => doc.data()) as IUser[];
-        updateMembers(members);
+        updateMembers(members.filter((member) => member.id !== user.uid));
       }
       setIsLoading(false);
     });

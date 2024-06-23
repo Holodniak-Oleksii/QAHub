@@ -37,13 +37,12 @@ const CreateProjectModal = create<IModalProps>(({ id }) => {
       const projectsCollectionRef = collection(firestore, "projects");
 
       const project: Omit<IProject, "id"> = {
-        members,
+        members: [...members, user],
         ownerId: user.id,
         name: data.name,
         tasks: [],
       };
       const docRef = await addDoc(projectsCollectionRef, project);
-
       const generatedId = docRef.id;
 
       await updateDoc(docRef, {

@@ -1,3 +1,4 @@
+import { useGetProjectQuery } from "@/api";
 import { LINK_TEMPLATES } from "@/common/constants";
 import { EModal } from "@/common/enums";
 import { LogoutIcon, PlusIcon, UserPlusIcon } from "@/common/icons";
@@ -23,6 +24,8 @@ const Account = () => {
   const { show: showRegistrationModal } = useModal(EModal.REGISTRATION_MODAL);
   const { show: showAddMembersModal } = useModal(EModal.ADD_MEMBERS_MODAL);
 
+  const { data: project } = useGetProjectQuery(id || 0);
+
   const handlerLogout = () => {
     signOut(auth);
     updateUser(null);
@@ -38,9 +41,11 @@ const Account = () => {
               <Icon onClick={() => showCreateTaskModal({ uid: id })}>
                 <PlusIcon />
               </Icon>
-              <Icon onClick={() => showAddMembersModal()}>
-                <UserPlusIcon />
-              </Icon>
+              {project?.ownerId === user?.id && (
+                <Icon onClick={() => showAddMembersModal()}>
+                  <UserPlusIcon />
+                </Icon>
+              )}
             </>
           )}
           <Avatar name={user?.username} />

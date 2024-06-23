@@ -88,3 +88,21 @@ export const Row = styled.div`
     background: ${({ theme }) => theme.colors.main500};
   }
 `;
+
+export const OwnerPlug = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 70px;
+  height: 70px;
+  background-color: ${({ theme }) => theme.colors.text500};
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 2px;
+  transform-origin: center;
+  transform: rotate(45deg) translate(0, -50px);
+  svg {
+    transform: rotate(-45deg);
+  }
+`;

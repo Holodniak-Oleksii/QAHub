@@ -1,4 +1,5 @@
 import { EQueryKey } from "@/common/enums";
+import { useUserStore } from "@/common/store/user";
 import { IProject, IUser, TID } from "@/common/types";
 import { firestore } from "@/firebase";
 import { QueryClient, useQuery } from "@tanstack/react-query";
@@ -25,13 +26,14 @@ export const getUserById = async (id: string): Promise<IUser> => {
 };
 
 export const useGetProjectsQuery = (uid: TID) => {
+  const user = useUserStore((state) => state.user);
   return useQuery<IProject[]>({
     refetchOnMount: false,
     queryKey: [EQueryKey.PROJECT, uid],
     queryFn: async () => {
       const projectsCollectionRef = query(
         collection(firestore, "projects"),
-        where("ownerId", "==", uid)
+        where("members", "array-contains", user)
       );
 
       const { docs } = await getDocs(projectsCollectionRef);
