@@ -94,10 +94,12 @@ const RegistrationModal = create<IModalProps>(({ id }) => {
             required: true,
             minLength: 6,
           })}
+          type="password"
           error={errors.password}
         />
 
         <Input
+          type="password"
           label={"Confirm password "}
           placeholder={"Enter confirm password"}
           {...register("passwordConfirmation", {

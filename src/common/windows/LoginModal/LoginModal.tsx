@@ -68,6 +68,7 @@ const LoginModal = create<IModalProps>(({ id }) => {
           {...register("password", {
             required: true,
           })}
+          type="password"
           error={errors.password}
         />
         <ActionContainer>
